@@ -8,11 +8,12 @@ ImVec2 Drawing::vWindowPos = { 0, 0 }; // Last ImGui window position.
 ImVec2 Drawing::vWindowSize = { 0, 0 }; // Last ImGui window size.
 
 /**
-    @brief : Hook of the EndScene function.
+    @brief : Hook of the EndScene / Present function.
     @param  D3D9Device : Current Direct3D9 Device Object.
-    @retval : Result of the original EndScene function.
+    @retval : Result of the original EndScene / Present function.
 **/
-HRESULT Drawing::hkEndScene(const LPDIRECT3DDEVICE9 D3D9Device)
+//HRESULT Drawing::hkEndScene(const LPDIRECT3DDEVICE9 D3D9Device)
+HRESULT Drawing::hkPresent(LPDIRECT3DDEVICE9 D3D9Device, const RECT* pSourceRect, const RECT* pDestRect, HWND hDestWindowOverride, const RGNDATA* pDirtyRegion)
 {
 	if (!Hook::pDevice)
 		Hook::pDevice = D3D9Device;
@@ -27,7 +28,8 @@ HRESULT Drawing::hkEndScene(const LPDIRECT3DDEVICE9 D3D9Device)
 	{
 		Hook::UnHookDirectX();
 		CreateThread(nullptr, 0, (LPTHREAD_START_ROUTINE)FreeLibrary, Hook::hDDLModule, 0, nullptr);
-		return Hook::oEndScene(D3D9Device);
+		//return Hook::oEndScene(D3D9Device);
+		return Hook::oPresent(D3D9Device, pSourceRect, pDestRect, hDestWindowOverride, pDirtyRegion);
 	}
 
 	ImGui_ImplDX9_NewFrame();
@@ -62,7 +64,8 @@ HRESULT Drawing::hkEndScene(const LPDIRECT3DDEVICE9 D3D9Device)
 	ImGui::Render();
 	ImGui_ImplDX9_RenderDrawData(ImGui::GetDrawData());
 
-	return Hook::oEndScene(D3D9Device);
+	//return Hook::oEndScene(D3D9Device);
+	return Hook::oPresent(D3D9Device, pSourceRect, pDestRect, hDestWindowOverride, pDirtyRegion);
 }
 
 /**

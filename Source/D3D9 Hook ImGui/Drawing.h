@@ -10,7 +10,8 @@ public:
 	static BOOL bInit;
 	static bool bSetPos;
 
-	static HRESULT APIENTRY hkEndScene(LPDIRECT3DDEVICE9 D3D9Device);
+	//static HRESULT APIENTRY hkEndScene(LPDIRECT3DDEVICE9 D3D9Device);
+	static HRESULT APIENTRY hkPresent(LPDIRECT3DDEVICE9 pDevice, const RECT* pSourceRect, const RECT* pDestRect, HWND hDestWindowOverride, const RGNDATA* pDirtyRegion);
 
 private:
 	static ImVec2 vWindowPos;

@@ -4,14 +4,16 @@
 #include "pch.h"
 
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
-using tEndScene = HRESULT(APIENTRY*)(LPDIRECT3DDEVICE9 pDevice);
+using tPresent = HRESULT(APIENTRY*)(LPDIRECT3DDEVICE9 pDevice, const RECT* pSourceRect, const RECT* pDestRect, HWND hDestWindowOverride, const RGNDATA* pDirtyRegion);
+//using tEndScene = HRESULT(APIENTRY*)(LPDIRECT3DDEVICE9 pDevice);
 using tReset = HRESULT(APIENTRY*)(LPDIRECT3DDEVICE9 pDevice, D3DPRESENT_PARAMETERS* pPresentationParameters);
 
 class Hook
 {
 public:
 	static IDirect3DDevice9* pDevice;
-	static tEndScene oEndScene;
+	static tPresent oPresent;
+	//static tEndScene oEndScene;
 	static HWND window;
 	static HMODULE hDDLModule;
 

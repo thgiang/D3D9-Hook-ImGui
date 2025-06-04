@@ -2,7 +2,8 @@
 #include "Drawing.h"
 
 LPDIRECT3DDEVICE9 Hook::pDevice = nullptr; // Direct3D9 Device Object
-tEndScene Hook::oEndScene = nullptr; // Pointer of the original EndScene function
+tPresent Hook::oPresent = nullptr; // Pointer of the original Present function
+//tEndScene Hook::oEndScene = nullptr; // Pointer of the original EndScene function
 tReset Hook::oReset = nullptr; // Pointer of the original Reset function
 HWND Hook::window = nullptr; // Window of the current process
 HMODULE Hook::hDDLModule = nullptr; // HMODULE of the DLL
@@ -19,11 +20,13 @@ void Hook::HookDirectX()
 {
 	if (GetD3D9Device(d3d9Device, sizeof(d3d9Device)))
 	{
-		oEndScene = (tEndScene)d3d9Device[42];
+		//oEndScene = (tEndScene)d3d9Device[42];
+		oPresent = (tPresent)d3d9Device[17];
 		oReset = (tReset)d3d9Device[16];
 		DetourTransactionBegin();
 		DetourUpdateThread(GetCurrentThread());
-		DetourAttach(&(PVOID&)oEndScene, Drawing::hkEndScene);
+		//DetourAttach(&(PVOID&)oEndScene, Drawing::hkEndScene);
+		DetourAttach(&(PVOID&)oPresent, Drawing::hkPresent);
 		DetourAttach(&(PVOID&)oReset, hkReset);
 		DetourTransactionCommit();
 	}
@@ -46,7 +49,8 @@ void Hook::UnHookDirectX()
 
 	DetourTransactionBegin();
 	DetourUpdateThread(GetCurrentThread());
-	DetourDetach(&(PVOID&)oEndScene, Drawing::hkEndScene);
+	//DetourDetach(&(PVOID&)oEndScene, Drawing::hkEndScene);
+	DetourDetach(&(PVOID&)oPresent, Drawing::hkPresent);
 	DetourDetach(&(PVOID&)oReset, hkReset);
 	DetourTransactionCommit();
 }
