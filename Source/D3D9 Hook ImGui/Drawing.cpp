@@ -4,7 +4,6 @@
 
 BOOL Drawing::bInit = FALSE; // Status of the initialization of ImGui.
 bool Drawing::bDisplay = true; // Status of the menu display.
-bool Drawing::bSetPos = false; // Status to update ImGui window size / position.
 ImVec2 Drawing::vWindowPos = { 0, 0 }; // Last ImGui window position.
 ImVec2 Drawing::vWindowSize = { 0, 0 }; // Last ImGui window size.
 
@@ -87,7 +86,6 @@ void customDraw(LPDIRECT3DDEVICE9 pDevice) {
 //HRESULT Drawing::hkEndScene(const LPDIRECT3DDEVICE9 D3D9Device)
 HRESULT Drawing::hkPresent(LPDIRECT3DDEVICE9 D3D9Device, const RECT* pSourceRect, const RECT* pDestRect, HWND hDestWindowOverride, const RGNDATA* pDirtyRegion)
 {
-	std::cout << "Drawing::hkPresent called." << std::endl;
 	if (!Hook::pDevice)
 		Hook::pDevice = D3D9Device;
 
@@ -114,20 +112,7 @@ HRESULT Drawing::hkPresent(LPDIRECT3DDEVICE9 D3D9Device, const RECT* pSourceRect
 		ImGui::Begin("Menu Window Title", &bDisplay);
 		{
 			ImGui::SetWindowSize({ 500, 300 }, ImGuiCond_Once);
-
-			if (vWindowPos.x != 0.0f && vWindowPos.y != 0.0f && vWindowSize.x != 0.0f && vWindowSize.y != 0.0f && bSetPos)
-			{
-				ImGui::SetWindowPos(vWindowPos);
-				ImGui::SetWindowSize(vWindowSize);
-				bSetPos = false;
-			}
-
-			if (bSetPos == false)
-			{
-				vWindowPos = {ImGui::GetWindowPos().x, ImGui::GetWindowPos().y};
-				vWindowSize = {ImGui::GetWindowSize().x, ImGui::GetWindowSize().y};
-			}
-
+		
 			ImGui::Text("Draw your menu here.");
 		}
 		ImGui::End();
@@ -138,7 +123,7 @@ HRESULT Drawing::hkPresent(LPDIRECT3DDEVICE9 D3D9Device, const RECT* pSourceRect
 	ImGui_ImplDX9_RenderDrawData(ImGui::GetDrawData());
 
 
-	customDraw(D3D9Device);
+	//customDraw(D3D9Device);
 
 	//return Hook::oEndScene(D3D9Device);
 	return Hook::oPresent(D3D9Device, pSourceRect, pDestRect, hDestWindowOverride, pDirtyRegion);

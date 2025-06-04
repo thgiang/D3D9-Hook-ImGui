@@ -177,9 +177,12 @@
     <ClInclude Include="ImGui\imstb_rectpack.h" />
     <ClInclude Include="ImGui\imstb_textedit.h" />
     <ClInclude Include="ImGui\imstb_truetype.h" />
+    <ClInclude Include="MusicCheoro.h" />
+    <ClInclude Include="MusicManager.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="MusicCheoro.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="Drawing.cpp" />
     <ClCompile Include="Hook.cpp" />

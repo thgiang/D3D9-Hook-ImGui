@@ -47,6 +47,12 @@
     <ClInclude Include="ImGui\imstb_truetype.h">
       <Filter>AHeader\ImGui</Filter>
     </ClInclude>
+    <ClInclude Include="MusicCheoro.h">
+      <Filter>AHeader</Filter>
+    </ClInclude>
+    <ClInclude Include="MusicManager.h">
+      <Filter>AHeader</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -78,6 +84,9 @@
     </ClCompile>
     <ClCompile Include="ImGui\backends\imgui_impl_win32.cpp">
       <Filter>AHeader\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="MusicCheoro.cpp">
+      <Filter>BSource</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
