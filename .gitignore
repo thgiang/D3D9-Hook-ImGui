@@ -1,0 +1,8 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs
+/Source/.vs/D3D9 Hook ImGui
+/Source/D3D9 Hook ImGui/Release
+/Source/Release
