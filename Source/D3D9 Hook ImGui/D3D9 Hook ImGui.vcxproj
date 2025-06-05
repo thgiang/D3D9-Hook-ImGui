@@ -180,6 +180,7 @@
     <ClInclude Include="MusicCheoro.h" />
     <ClInclude Include="MusicManager.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="WebSocketClient.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MusicCheoro.cpp" />
@@ -193,6 +194,8 @@
     <ClCompile Include="ImGui\imgui_draw.cpp" />
     <ClCompile Include="ImGui\imgui_tables.cpp" />
     <ClCompile Include="ImGui\imgui_widgets.cpp" />
+    <ClCompile Include="MusicManager.cpp" />
+    <ClCompile Include="WebSocketClient.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
