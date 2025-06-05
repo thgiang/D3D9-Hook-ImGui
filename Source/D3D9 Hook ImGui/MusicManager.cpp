@@ -3,6 +3,15 @@
 
 using json = nlohmann::json;
 
+void MusicManager::requestCheoroMusic() {
+    this->socket->send(R"({"event": "get_music_cheoro_list"})");
+}
+
+void MusicManager::handleConnectionStatus(const bool connected) {
+    if (connected) {
+        this->socket->send(R"({"event": "get_music_cheoro_list"})");
+    }
+}
 void MusicManager::handleServerMessage(const std::string& msg) {
     try {
         auto j = json::parse(msg);

@@ -3,6 +3,7 @@
 #include <string>
 #include "MusicCheoro.h"
 #include "WebSocketClient.h"
+#include <ixwebsocket/IXWebSocket.h>
 #include <iostream>
 
 class MusicManager {
@@ -16,6 +17,8 @@ public:
         return cheoroList;
     }
 
+    void requestCheoroMusic();
+
 private:
     std::vector<MusicCheoro> cheoroList;
     WebSocketClient* socket;
@@ -24,11 +27,13 @@ private:
         : socket(clientSocket)
     {
         if (socket) {
+            socket->setStatusCallback([this](const bool connected) {
+                handleConnectionStatus(connected);
+            });
+
             socket->setMessageCallback([this](const std::string& msg) {
                 handleServerMessage(msg);
-                });
-
-            socket->send(R"({"event": "get_music_list"})");
+            });
         }
 
         // Optional fallback
@@ -37,6 +42,8 @@ private:
         }
     }
 
+    
+    void handleConnectionStatus(const bool connected);
     void handleServerMessage(const std::string& msg);
 
     // singleton

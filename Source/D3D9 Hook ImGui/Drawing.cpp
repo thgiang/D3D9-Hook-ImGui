@@ -1,6 +1,9 @@
 ﻿#include "Drawing.h"
 #include "Hook.h"
+#include "MusicManager.h"
 #include <iostream>
+
+extern MusicManager* g_pMusicManager;
 
 BOOL Drawing::bInit = FALSE; // Status of the initialization of ImGui.
 bool Drawing::bDisplay = true; // Status of the menu display.
@@ -114,6 +117,51 @@ HRESULT Drawing::hkPresent(LPDIRECT3DDEVICE9 D3D9Device, const RECT* pSourceRect
 			ImGui::SetWindowSize({ 500, 300 }, ImGuiCond_Once);
 		
 			ImGui::Text("Draw your menu here.");
+			// Get cheoro music list 
+			if (!g_pMusicManager) {
+				ImGui::Text("Music Manager is not initialized yet...");
+			}
+			else {
+				const auto& list = g_pMusicManager->getCheoroList();
+				if (list.empty()) {
+					ImGui::Text("No cheoro music found.");
+				}
+				else {
+					if (ImGui::BeginTable("cheoro_table", 3, ImGuiTableFlags_Borders | ImGuiTableFlags_RowBg | ImGuiTableFlags_ScrollY)) {
+						// Table headers
+						ImGui::TableSetupColumn("STT");
+						ImGui::TableSetupColumn("Tên bài hát");
+						ImGui::TableSetupColumn("Thao tác");
+						ImGui::TableHeadersRow();
+
+						// Table content
+						for (int i = 0; i < list.size(); i++) {
+							ImGui::TableNextRow();
+							
+							// STT column
+							ImGui::TableSetColumnIndex(0);
+							ImGui::Text(u8"%d", i + 1);
+							
+							// Song name column
+							ImGui::TableSetColumnIndex(1);
+							ImGui::Text(u8"%s", list[i].title.c_str());
+							
+							// Actions column
+							ImGui::TableSetColumnIndex(2);
+							ImGui::PushID(i);
+							if (ImGui::Button("Play")) {
+								// TODO: Add play functionality
+							}
+							ImGui::SameLine();
+							if (ImGui::Button("Stop")) {
+								// TODO: Add stop functionality
+							}
+							ImGui::PopID();
+						}
+						ImGui::EndTable();
+					}
+				}
+			}
 		}
 		ImGui::End();
 	}

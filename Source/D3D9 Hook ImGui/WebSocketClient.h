@@ -5,7 +5,6 @@
 
 #pragma comment(lib, "Crypt32.lib")
 #pragma comment(lib, "Bcrypt.lib")
-
 class WebSocketClient {
 public:
     using MessageCallback = std::function<void(const std::string&)>;
